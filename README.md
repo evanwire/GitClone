@@ -36,3 +36,9 @@ Remove is used to change the client manifest to let it know the user has removed
 
 ./WTF currentversion <project name>
 Current version is used to get the current version of a project and all the files it contains on the server. If the project does not exist on the server, currentversion will fail.
+
+# What I learned building this
+Prior to this project, I had no experience with low-level networking. Now I can confidently create client/server sockets and have them communicate with one another. Additionally, this was the first project in which I implemented multi threading. This was also, simply put, a rather large project, so I got good practice with modular programming.
+
+# What changes I plan to make to this
+There are a few bugs I need to fix in the code, namely I need to add functionality that will allow the client to connect to the server using not only an ip address, but also a domain name. Additionally, I would like to add ./WTF history and ./WTF rollback functionality. These functions would allow users to view all changes made on the project and roll back to a previous version number respectively. I would also like to implement compression on old project versions. Additionally, it would be cool to develop a UI for this.
