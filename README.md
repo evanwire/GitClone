@@ -1,5 +1,5 @@
 # Overall Explanation:
-The design of our WTF system is as follows. The server is ran by calling ./WTFserver and then specifying the port number to use. The server will then run until SIGINT. The client is run with a variety of commands, which are configure, checkout, update, upgrade, commit, push, create, destroy, add, remove, and currentversion. While some of these client commands do not require the client to connect to the server, some do. For the ones that do, the client attempts to connect to the server and will continue to try so until SIGINT or it successfully connects. When the client connects, the server receives a buffer from the client starting with “# “, where # is a single character representing the request of the client. The server then creates a new pthread running the appropriate method to handle the client’s request. This is done so multiple clients can connect to the server at once. When the requested service is completed, the process ends.
+The design of our "wheres the file" (WTF) system is as follows. The server is ran by calling ./WTFserver and then specifying the port number to use. The server will then run until SIGINT. The client is run with a variety of commands, which are configure, checkout, update, upgrade, commit, push, create, destroy, add, remove, and currentversion. While some of these client commands do not require the client to connect to the server, some do. For the ones that do, the client attempts to connect to the server and will continue to try so until SIGINT or it successfully connects. When the client connects, the server receives a buffer from the client starting with “# “, where # is a single character representing the request of the client. The server then creates a new pthread running the appropriate method to handle the client’s request. This is done so multiple clients can connect to the server at once. When the requested service is completed, the process ends.
 
 # Client Functions
 Below are a list of the client commands:
@@ -36,6 +36,3 @@ Remove is used to change the client manifest to let it know the user has removed
 
 ./WTF currentversion <project name>
 Current version is used to get the current version of a project and all the files it contains on the server. If the project does not exist on the server, currentversion will fail.
-
-Side Note:
-Unfortunately, the history and rollback commands are not included.
