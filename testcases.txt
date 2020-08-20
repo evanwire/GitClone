@@ -1,0 +1,57 @@
+While we were creating this project, our tests were done by running one terminal window in a folder with WTF, and another terminal window in a folder with WTFserver. The folders containing the executables would then be in the same parent directory. To test the various commands that our code had to do, we created subdirectories and files using the operating system or our WTF executables when appropriate. We would then look through the server and client repositories, making sure all subdirectories and files matched up with the expectations of the assignment prompt. After configuring and assuming the server is running, examples included:
+
+./WTF configure 127.0.0.1 8888 - Would create a .configure file with the IP address and port number the server is listening on. It prints to STDOUT the IP address and port number.
+
+./WTF create projectA - This created a folder projectA on the server if it did not already exist, and on the client if it didn't already exist. It also placed a matching manifest in each subdirectory.
+
+./WTF destroy projectA - If a projectA folder existed in the server repository, it would delete it and all of its contents.
+
+./WTF checkout projectA - If projectA didn't exist in the client repository, it would copy projectA from the server if it existed in the server's repository.
+
+./WTF update projectA - Assuming projectA existed on both the server and the client, the client would recieve the server's version of the project's manifest, and properly create the .Update and or .Conflict files as needed.
+
+./WTF upgrade projectA - Assuming there was a .Conflict and or .Update file in projectA, upgrade would respond accordingly. If there were any add, delete, or modify symbols in the.Update file, the client version of the project would upgrade itself to match the servers version of the project. If there was a .Conflict file or the project did not exist on either side, upgrade would fail.
+
+./WTF commit projectA - The client would recieve the server's manifest, and if it was up to date it would prepare a list of changes for the server to make when a push was called. Assuming the project existed on both sides, this worked properly.
+
+./WTF push projectA - If commit was called and a commit file was ready, the server would make the changes listed in commit to its version of the project.
+
+./WTF add projectA file1 - If projectA and file1 existed, projectA would add an entry for file1 to projectA's client mainfest.
+
+./WTF remove projectA file1 - If projectA and an entry for file1 in the client's manifest for projectA existed, projectA would append an R entry for file1's entry in the client manifest.
+
+./WTF currentversion projectA - If projectA existed on the server, projectA would ouput the project's version followed by all the files in the project and thheir versions, each separated by a new line.
+
+To test all of these commands, we created a folder in Asst3 to act as the server repository that we will refer to as serverside, and a folder in Asst3 to act as the client respository we will refer to as clientside. The WTF and WTFserver objects were made and moved to their respective folders before testing. This can all be done by the WTFtest object. Unfortunately, while trying to test the WTF and WTFserver object using WTFtest, we noticed that they were both using WTFtest's directory as their repository instead of serverside and clientside. This leads to results that did not match up with how our code intends to works, and worked while we were testing it with two different terminal windows, as well as limited testing ability.
+
+
+-Testing with WTFtest-
+Testing ./WTF configure:
+
+To test this command, we ran ./WTF configure 127.0.0.1 8888 and ./WTFserver 8888. We know this works because the testcases after this work as well. The Expected out put is configure with IP address 127.0.0.1 and port number 8888.
+
+For all following tests, the WTFserver will be listening on port number 8888.
+
+This was one of the few tests that worked with WTFtest.
+
+
+Testing ./WTF create
+Test1: ./WTF create projectA
+This created a directory called projectA in the same directory as WTFtest. A manifest is created within project.
+
+Test2: ./WTF create projectA (with projectA already existing)
+Output: Error: That project already exists. You can download the current version of the project that is on the server with the checkout command.
+
+Testing ./WTF destroy
+Test1: ./WTF destroy projectA
+This deleted projectA from the directory as expected.
+
+Test2: ./WTF destroy projectA (without projectA existing)
+Output: Error: The project projectA does not exist on the server.
+
+Unfortunately with WTF not using clientside as its repository, and WTFserver not using serverside as its repository, WTFtest cannot properly test most of the functionalities of our WTF system.
+
+
+
+
+
